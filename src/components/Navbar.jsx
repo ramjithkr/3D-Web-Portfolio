@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import { navLinks } from "../constants";
 import { logo, menu, close } from "../assets";
-import { div, nav } from "framer-motion/client";
 import { styles } from "../styles";
 
 const Navbar = () => {
@@ -23,8 +22,10 @@ const Navbar = () => {
           }}
         >
           <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
-          <p className="text-white text-[18px] font-bold cursor-pointer">
-            Ramjith KR &nbsp; <span className="sm:block hidden ">| Portfolio</span>
+          <p className="text-white text-[18px] font-bold cursor-pointer flex">
+
+            Ramjith KR &nbsp;
+             <span className="sm:block hidden ">| Portfolio</span>
           </p>
         </Link>
         <ul className="list-none hidden sm:flex flex-row gap-10">
