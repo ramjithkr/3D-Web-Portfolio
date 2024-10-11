@@ -1,16 +1,21 @@
-
-import  { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import { OrbitControls, Preload, useGLTF, Html } from "@react-three/drei";
 
-import CanvasLoader from "../Loader";
+const CanvasLoader = () => {
+  return (
+    <Html center>
+      <div style={{ color: "white" }}>Loading...</div>
+    </Html>
+  );
+};
 
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
 
   return (
     <mesh>
-      <hemisphereLight intensity={0.15} groundColor='black' />
+      <hemisphereLight intensity={0.15} groundColor="black" />
       <spotLight
         position={[-20, 50, 10]}
         angle={0.12}
@@ -54,9 +59,22 @@ const ComputersCanvas = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleContextLost = (event) => {
+      console.error("WebGL context lost:", event);
+    };
+
+    const canvasElement = document.querySelector("canvas");
+    canvasElement.addEventListener("webglcontextlost", handleContextLost);
+
+    return () => {
+      canvasElement.removeEventListener("webglcontextlost", handleContextLost);
+    };
+  }, []);
+
   return (
     <Canvas
-      frameloop='demand'
+      frameloop="demand"
       shadows
       dpr={[1, 2]}
       camera={{ position: [20, 3, 5], fov: 25 }}
